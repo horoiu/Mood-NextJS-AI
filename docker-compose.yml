@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mood
+      MYSQL_DATABASE: mood-mysql
+    ports:
+      - '3306:3307'
+    volumes:
+      - mood-mysql-data:/var/lib/mysql
+volumes:
+  db_data:
