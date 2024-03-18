@@ -35,7 +35,7 @@ const EntryPage = async ({ params }: EntryPageProps) => {
   const entry = await getEntry(params.id)
 
   return (
-    <div>
+    <div className="w-full h-full">
       <Editor entry={entry} />
       {params.id}
     </div>
