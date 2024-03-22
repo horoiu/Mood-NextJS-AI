@@ -3,6 +3,7 @@ import NewEntryCard from '@/components/NewEntryCard'
 import { getUserByClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import Link from 'next/link'
+import { analyse } from '../../../utils/ai'
 
 const getEntries = async () => {
   const user = await getUserByClerkId()
@@ -14,6 +15,10 @@ const getEntries = async () => {
       createdAt: 'desc',
     },
   })
+
+  await analyse([
+    "I'm going to give you a journal entry, I want you to analyse for a few things. I need the mood, a summary, what the subject is, and a color representing the mood, while negative should be boolean value. You need to respond back with formatted JSON like so: { mood: '', subject: '', color: '', negative: ''}. Entry: Today was a really great day. I finnaly was able to grab that pair of shoes I've been dying to get.",
+  ])
 
   return entries
 }
