@@ -8,12 +8,21 @@ type EntryPageProps = {
   }
 }
 
+type AnalysisProps = {
+  mood: string
+  subject: string
+  summary: string
+  negative: boolean
+  color: string
+}
+
 export type EntryProps = {
   id: string
   createdAt: Date
   updatedAt: Date
   userId: string
   content: string
+  analysis: AnalysisProps
 }
 
 const getEntry = async (id: string) => {
@@ -26,6 +35,9 @@ const getEntry = async (id: string) => {
         id,
       },
     },
+    include: {
+      analysis: true,
+    },
   })
 
   return (entry as EntryProps) || null
@@ -34,11 +46,14 @@ const getEntry = async (id: string) => {
 const EntryPage = async ({ params }: EntryPageProps) => {
   const entry = await getEntry(params.id)
 
+  const { mood, subject, summary, negative, color } = entry.analysis
+
   const analysisData = [
-    { name: 'Subject', val: '' },
-    { name: 'Summary', val: '' },
-    { name: 'Mood', val: '' },
-    { name: 'Negative', val: 'False' },
+    { name: 'Subject', val: subject },
+    { name: 'Summary', val: summary },
+    { name: 'Mood', val: mood },
+    { name: 'Negative', val: negative ? 'True' : 'False' },
+    { name: 'Color', val: color },
   ]
 
   return (
@@ -48,7 +63,7 @@ const EntryPage = async ({ params }: EntryPageProps) => {
       </div>
 
       <div className="border-l border-black/10">
-        <div className="bg-blue-300 px-6 py-10">
+        <div className="px-6 py-10" style={{ backgroundColor: color }}>
           <h2 className="text-2xl">Analysis</h2>
         </div>
 
