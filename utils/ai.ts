@@ -28,9 +28,13 @@ export const analyse = async (content: string) => {
 
   const model = new OpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' })
 
-  const result = await model.generate([input])
+  const result = await model.invoke(input)
 
-  console.log('AI result: ', result.generations[0])
+  try {
+    return parser.parse(result)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const getPrompt = async (content: string) => {
@@ -44,8 +48,6 @@ export const getPrompt = async (content: string) => {
   })
 
   const input = await prompt.format({ entry: content })
-
-  console.log('Input: ', input)
 
   return input
 }
