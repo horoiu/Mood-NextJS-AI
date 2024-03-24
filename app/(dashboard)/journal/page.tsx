@@ -16,9 +16,10 @@ const getEntries = async () => {
     },
   })
 
-  await analyse([
-    "I'm going to give you a journal entry, I want you to analyse for a few things. I need the mood, a summary, what the subject is, and a color representing the mood, while negative should be boolean value. You need to respond back with formatted JSON like so: { mood: '', subject: '', color: '', negative: ''}. Entry: Today was a really great day. I finnaly was able to grab that pair of shoes I've been dying to get.",
-  ])
+  await analyse(
+    // "I'm going to give you a journal entry, I want you to analyse for a few things. I need the mood, a summary, what the subject is, and a color representing the mood, while negative should be boolean value. You need to respond back with formatted JSON like so: { mood: '', subject: '', color: '', negative: ''}. Entry: Today was a really great day. I finnaly was able to grab that pair of shoes I've been dying to get."
+    'Today was a eh, ok day I guess. I found a new coffe shop that was cool, but then I got a flat tire. :)'
+  )
 
   return entries
 }
