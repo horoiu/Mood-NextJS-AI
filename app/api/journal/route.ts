@@ -16,7 +16,7 @@ export const POST = async () => {
 
   const analysis = await analyse(entry.content)
   if (!analysis) {
-    return new NextResponse('Failed to analyze entry')
+    return new NextResponse('Failed to analyze entry - 1')
   }
 
   await prisma.analysis.create({

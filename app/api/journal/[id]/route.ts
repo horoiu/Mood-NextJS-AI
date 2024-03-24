@@ -1,6 +1,7 @@
 import { getUserByClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import { NextResponse } from 'next/server'
+import { analyse } from '../../../../utils/ai'
 
 export const PATCH = async (
   request: Request,
@@ -18,6 +19,25 @@ export const PATCH = async (
     },
     data: {
       content,
+    },
+  })
+
+  const analysis = await analyse(updatedEntry.content)
+
+  if (!analysis) {
+    return new NextResponse('Failed to analyze entry - 2')
+  }
+
+  await prisma.analysis.upsert({
+    where: {
+      entryId: updatedEntry.id,
+    },
+    create: {
+      entryId: updatedEntry.id,
+      ...analysis,
+    },
+    update: {
+      ...analysis,
     },
   })
 
