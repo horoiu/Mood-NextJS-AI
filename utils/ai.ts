@@ -57,7 +57,10 @@ export const getPrompt = async (content: string) => {
   return input
 }
 
-export const qa = async (question: string, entries: EntryProps[]) => {
+export const qa = async (
+  question: string,
+  entries: Pick<EntryProps, 'content' | 'id' | 'createdAt'>[]
+) => {
   const docs = entries.map((entry) => {
     return new Document({
       pageContent: entry.content,
