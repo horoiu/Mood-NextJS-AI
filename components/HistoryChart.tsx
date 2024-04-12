@@ -1,7 +1,8 @@
 'use client'
+import { Analysis } from '@prisma/client'
 import { ResponsiveContainer, Line, XAxis, Tooltip, LineChart } from 'recharts'
 
-const HistoryChart = ({ data }) => {
+const HistoryChart = ({ data }: { data: Analysis[] }) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart width={300} height={100} data={data}>
@@ -26,11 +27,11 @@ const CustomTooltip = ({
   label,
   active,
 }: {
-  payload: any[]
-  label: string
-  active: boolean
+  payload?: any[]
+  label?: string
+  active?: boolean
 }) => {
-  const dateLabel = new Date(label).toLocaleString('en-us', {
+  const dateLabel = new Date(label || '').toLocaleString('en-us', {
     weekday: 'long',
     year: 'numeric',
     month: 'short',
@@ -40,7 +41,7 @@ const CustomTooltip = ({
   })
 
   if (active) {
-    const analysis = payload[0].payload
+    const analysis = payload?.[0].payload
 
     return (
       <div className="p-8 custom-tooltip bg-white/5 shadow-md border border-black/10 rounded-lg backdrop-blur-md relative">

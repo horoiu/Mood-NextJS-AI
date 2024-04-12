@@ -1,6 +1,7 @@
 import { getUserByClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import HistoryChart from '../../../components/HistoryChart'
+import { Analysis } from '@prisma/client'
 
 const History = async () => {
   const { analysis, avg } = await getData()
@@ -19,7 +20,7 @@ export default History
 
 const getData = async () => {
   const user = await getUserByClerkId()
-  const analysis = await prisma.analysis.findMany({
+  const analysis: Analysis[] = await prisma.analysis.findMany({
     where: {
       userId: user.id,
     },
