@@ -25,7 +25,7 @@ export type EntryProps = {
   analysis: AnalysisProps
 }
 
-const getEntry = async (id: string) => {
+export const getEntry = async (id: string) => {
   const user = await getUserByClerkId()
 
   const entry = await prisma.journalEntry.findUnique({
